@@ -46,7 +46,7 @@
 
 ### Set up auto-deployment
 **Set up GitHub Actions**
-1. Create a GitHub Actions Workflow file, and commit the changes.
+1. Create a GitHub Actions Workflow file, and commit the changes. Save it in **/.github/workflows/deploy.yml**.
     ```yaml
       name: Deploy to Lightsail
 
@@ -92,6 +92,7 @@
 1. Add all your files to the repository, then commit/push all the changes.
 2. From your instance, run the following.
    ```bash
+   sudo chown -R ubuntu:ubuntu /var/www/folder_name
    git reset --hard origin/main
    git pull origin main
    ```

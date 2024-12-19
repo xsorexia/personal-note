@@ -1,0 +1,28 @@
+name: Deploy to Lightsail
+
+on:
+  push:
+    branches:
+      - main # Adjust this if your deployment branch is different
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Deploy via SSH
+      uses: appleboy/ssh-action@v0.1.6
+      with:
+        host: ${{ secrets.LIGHTSAIL_IP }}
+        username: ${{ secrets.LIGHTSAIL_USER }}
+        key: ${{ secrets.LIGHTSAIL_PRIVATE_KEY }}
+        port: 22
+        script: |
+          cd /var/www/palette
+          git fetch origin main
+          git stash
+          git pull origin main
+          sudo systemctl reload nginx
