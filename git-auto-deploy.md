@@ -48,34 +48,34 @@
 **Set up GitHub Actions**
 1. Create a GitHub Actions Workflow file, and commit the changes.
     ```yaml
-    name: Deploy to Lightsail
+      name: Deploy to Lightsail
 
-    on:
-    push:
-        branches:
-        - main # Adjust this to your deployment branch
+      on:
+      push:
+         branches:
+            - main # Adjust this if your deployment branch is different
 
-    jobs:
-    deploy:
-        runs-on: ubuntu-latest
+      jobs:
+      deploy:
+         runs-on: ubuntu-latest
 
-        steps:
-        - name: Checkout Repository
-        uses: actions/checkout@v3
+         steps:
+         - name: Checkout Repository
+            uses: actions/checkout@v3
 
-        - name: Deploy via SSH
-        uses: appleboy/ssh-action@v0.1.6
-        with:
+         - name: Deploy via SSH
+            uses: appleboy/ssh-action@v0.1.6
+            with:
             host: ${{ secrets.LIGHTSAIL_IP }}
             username: ${{ secrets.LIGHTSAIL_USER }}
             key: ${{ secrets.LIGHTSAIL_PRIVATE_KEY }}
             port: 22
             script: |
-            cd /path/to/your/website
-            git fetch origin main
-            git stash
-            git pull origin main
-            sudo systemctl reload nginx
+               cd /var/www/visitors
+               git fetch origin main
+               git stash
+               git pull origin main
+               sudo systemctl reload nginx
     ```
 2. Obtain your .pem file for your instance. Copy starting from --- BEGIN RSA PRIVATE KEY --- to --- END RSA PRIVATE KEY ---.
    ```bash
@@ -90,4 +90,9 @@
 ### You're all set!
 **Test the workflow**
 1. Add all your files to the repository, then commit/push all the changes.
-2. Check the status 
+2. From your instance, run the following.
+   ```bash
+   git reset --hard origin/main
+   git pull origin main
+   ```
+3. Check the status 
