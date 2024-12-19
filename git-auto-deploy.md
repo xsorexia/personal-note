@@ -78,11 +78,10 @@
             sudo systemctl reload nginx
     ```
 2. Obtain your .pem file for your instance. Copy starting from --- BEGIN RSA PRIVATE KEY --- to --- END RSA PRIVATE KEY ---.
-   > [!IMPORTANT]
-   > "--- BEGIN.. ---" and "--- END.. ---" *MUST BE INCLUDED*. If not, the deploy will fail with the following error: ssh.ParsePrivateKey: ssh: no key found.
    ```bash
    cat /path/to/your-key.pem
    ```
+      > "--- BEGIN.. ---" and "--- END.. ---" *MUST BE INCLUDED*. If not, the deploy will fail with the following error: ssh.ParsePrivateKey: ssh: no key found.
 3. Navigate to **Settings > Secrets and variables > Actions** in your repository.
    - LIGHTSAIL_IP: Public IP address
    - LIGHTSAIL_USER: Username (ubuntu, etc.)
